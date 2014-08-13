@@ -1,4 +1,9 @@
-directory-collection-plus
+directory-iterator-plus
 =========================
 
-A PHP 5.3.3+ class which extends the PHP RecursiveDirectoryIterator class
+A simple extension of the PHP `\DirectoryIterator` class
+
+## Installation in your Composer App
+```json
+"dcarbone/directory-iterator-plus" : "*"
+```
