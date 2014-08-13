@@ -12,8 +12,8 @@
         syntaxCheck="true"
         >
 
-    <testsuite name="DirectoryCollectionPlus">
-        <directory>./tests/DirectoryCollectionPlus</directory>
+    <testsuite name="DirectoryIteratorPlus">
+        <directory>./tests/DirectoryIteratorPlus</directory>
         <exclude>./tests/misc</exclude>
     </testsuite>
 

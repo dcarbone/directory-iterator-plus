@@ -1,12 +1,12 @@
 {
-    "name" : "dcarbone/directory-collection-plus",
+    "name" : "dcarbone/directory-iterator-plus",
     "type" : "library",
-    "description" : "A PHP class designed to directories with lots of files easier to consume in code",
+    "description" : "A simple extension of the PHP \\DirectoryIterator class",
 
     "keywords": [
         "php"
     ],
-    "homepage": "https://github.com/dcarbone/directory-collection-plus",
+    "homepage": "https://github.com/dcarbone/directory-iterator-plus",
     "license": "GPLv3",
 
     "authors" : [

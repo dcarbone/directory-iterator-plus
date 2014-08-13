@@ -1,10 +1,10 @@
 <?php namespace DCarbone;
 
 /**
- * Class DirectoryCollectionPlus
+ * Class DirectoryIteratorPlus
  * @package DCarbone
  */
-class DirectoryCollectionPlus extends \DirectoryIterator
+class DirectoryIteratorPlus extends \DirectoryIterator
 {
     /** @var int */
     protected $fileCount = 0;
@@ -66,7 +66,7 @@ class DirectoryCollectionPlus extends \DirectoryIterator
     public function containsFile($file)
     {
         if (!is_string($file))
-            throw new \InvalidArgumentException('DirectoryCollectionPlus::containsFile - Argument 1 expected to be string, '.gettype($file).' seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::containsFile - Argument 1 expected to be string, '.gettype($file).' seen.');
 
         $found = false;
         $this->rewind();
@@ -93,10 +93,10 @@ class DirectoryCollectionPlus extends \DirectoryIterator
     public function containsFileLike($string, $caseInsensitive = false)
     {
         if (!is_string($string))
-            throw new \InvalidArgumentException('DirectoryCollectionPlus::containsFileLike - Argument 1 expected to be string, '.gettype($string).' seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::containsFileLike - Argument 1 expected to be string, '.gettype($string).' seen.');
 
         if (!is_bool($caseInsensitive))
-            throw new \InvalidArgumentException('DirectoryCollectionPlus::containsFileLike - Argument 2 expected to be bool, '.gettype($caseInsensitive).' seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::containsFileLike - Argument 2 expected to be bool, '.gettype($caseInsensitive).' seen.');
 
         $found = false;
         $this->rewind();
@@ -139,7 +139,7 @@ class DirectoryCollectionPlus extends \DirectoryIterator
     public function containsDirectory($directory)
     {
         if (!is_string($directory))
-            throw new \InvalidArgumentException('DirectoryCollectionPlus::containsFile - Argument 1 expected to be string, '.gettype($directory).' seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::containsFile - Argument 1 expected to be string, '.gettype($directory).' seen.');
 
         $found = false;
         $this->rewind();
@@ -166,10 +166,10 @@ class DirectoryCollectionPlus extends \DirectoryIterator
     public function containsDirectoryLike($string, $caseInsensitive = false)
     {
         if (!is_string($string))
-            throw new \InvalidArgumentException('DirectoryCollectionPlus::containsFileLike - Argument 1 expected to be string, '.gettype($string).' seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::containsFileLike - Argument 1 expected to be string, '.gettype($string).' seen.');
 
         if (!is_bool($caseInsensitive))
-            throw new \InvalidArgumentException('DirectoryCollectionPlus::containsFileLike - Argument 2 expected to be bool, '.gettype($caseInsensitive).' seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::containsFileLike - Argument 2 expected to be bool, '.gettype($caseInsensitive).' seen.');
 
         $found = false;
         $this->rewind();
@@ -214,17 +214,17 @@ class DirectoryCollectionPlus extends \DirectoryIterator
     public function paginateFileNameList($offset = 0, $limit = 25, $search = null)
     {
         if (!is_int($offset))
-            throw new \InvalidArgumentException('DirectoryCollectionPlus::paginateFileNameList - Argument 1 expected to be integer, '.gettype($offset).' seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::paginateFileNameList - Argument 1 expected to be integer, '.gettype($offset).' seen.');
         if ($offset < 0)
-            throw new \InvalidArgumentException('DirectoryCollectionPlus::paginateFileNameLIst - Argument 1 expected to be >= 0, "'.$offset.'" seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::paginateFileNameLIst - Argument 1 expected to be >= 0, "'.$offset.'" seen.');
 
         if (!is_int($limit))
-            throw new \InvalidArgumentException('DirectoryCollectionPlus::paginateFileNameList - Argument 2 expected to be integer, '.gettype($limit).' seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::paginateFileNameList - Argument 2 expected to be integer, '.gettype($limit).' seen.');
         if ($limit < -1)
-            throw new \InvalidArgumentException('DirectoryCollectionPlus::paginateFileNameLIst - Argument 2 must be >= -1, "'.$limit.'" seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::paginateFileNameLIst - Argument 2 must be >= -1, "'.$limit.'" seen.');
 
         if ($search !== null && !is_scalar($search))
-            throw new \InvalidArgumentException('DirectoryCollectionPlus::paginateFileNameList - Argument 3 expected to be scalar value or null, '.gettype($search).' seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::paginateFileNameList - Argument 3 expected to be scalar value or null, '.gettype($search).' seen.');
 
         $filei = 0;
 
