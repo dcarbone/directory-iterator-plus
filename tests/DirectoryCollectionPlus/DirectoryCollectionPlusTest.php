@@ -283,4 +283,178 @@ class DirectoryCollectionPlusTest extends PHPUnit_Framework_TestCase
     {
         $contains = $dirCollection->containsDirectoryLike('ory-0', 'no way, bro');
     }
+
+    /**
+     * @covers \DCarbone\DirectoryCollectionPlus::paginateFileNameList
+     * @uses \DCarbone\DirectoryCollectionPlus
+     * @depends testCanConstructDirectoryCollectionPlusWithValidParameter
+     * @param \DCarbone\DirectoryCollectionPlus $dirCollection
+     */
+    public function testCanPaginateFilesInDirectoryWithDefaultValues(\DCarbone\DirectoryCollectionPlus $dirCollection)
+    {
+        $list = $dirCollection->paginateFileNameList();
+
+        $this->assertEquals(11, count($list));
+        $this->assertContains('index.html', $list);
+        $this->assertContains('single-file-9.txt', $list);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryCollectionPlus::paginateFileNameList
+     * @uses \DCarbone\DirectoryCollectionPlus
+     * @depends testCanConstructDirectoryCollectionPlusWithValidParameter
+     * @param \DCarbone\DirectoryCollectionPlus $dirCollection
+     */
+    public function testCanPaginateFilesInDirectoryWithIncreasedValidOffset(\DCarbone\DirectoryCollectionPlus $dirCollection)
+    {
+        $list = $dirCollection->paginateFileNameList(5);
+
+        $this->assertEquals(7, count($list));
+        $this->assertContains('single-file-3.txt', $list);
+        $this->assertContains('single-file-9.txt', $list);
+        $this->assertNotContains('single-file-2.txt', $list);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryCollectionPlus::paginateFileNameList
+     * @uses \DCarbone\DirectoryCollectionPlus
+     * @depends testCanConstructDirectoryCollectionPlusWithValidParameter
+     * @param \DCarbone\DirectoryCollectionPlus $dirCollection
+     */
+    public function testCanPaginateFilesInDirectoryWithDecreasedLimit(\DCarbone\DirectoryCollectionPlus $dirCollection)
+    {
+        $list = $dirCollection->paginateFileNameList(0, 5);
+
+        $this->assertEquals(5, count($list));
+        $this->assertContains('single-file-0.txt', $list);
+        $this->assertNotContains('single-file-4.txt', $list);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryCollectionPlus::paginateFileNameList
+     * @uses \DCarbone\DirectoryCollectionPlus
+     * @depends testCanConstructDirectoryCollectionPlusWithValidParameter
+     * @param \DCarbone\DirectoryCollectionPlus $dirCollection
+     */
+    public function testCanPaginateFilesInDirectoryWithIncreasedOffsetAndDecreasedLimit(\DCarbone\DirectoryCollectionPlus $dirCollection)
+    {
+        $list = $dirCollection->paginateFileNameList(3, 5);
+
+        $this->assertEquals(5, count($list));
+        $this->assertContains('single-file-3.txt', $list);
+        $this->assertContains('single-file-5.txt', $list);
+        $this->assertNotContains('index.html', $list);
+        $this->assertNotContains('single-file-6.txt', $list);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryCollectionPlus::paginateFileNameList
+     * @uses \DCarbone\DirectoryCollectionPlus
+     * @depends testCanConstructDirectoryCollectionPlusWithValidParameter
+     * @param \DCarbone\DirectoryCollectionPlus $dirCollection
+     */
+    public function testCanGetEmptyArrayFromPaginateFileNameListWithLargerThanCountOffset(\DCarbone\DirectoryCollectionPlus $dirCollection)
+    {
+        $list = $dirCollection->paginateFileNameList(9000);
+
+        $this->assertTrue(is_array($list));
+        $this->assertEquals(0, count($list));
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryCollectionPlus::paginateFileNameList
+     * @uses \DCarbone\DirectoryCollectionPlus
+     * @depends testCanConstructDirectoryCollectionPlusWithValidParameter
+     * @param \DCarbone\DirectoryCollectionPlus $dirCollection
+     */
+    public function testCanPaginateFilesInDirectoryWithDefaultOffsetLimitAndValidSearchParameter(\DCarbone\DirectoryCollectionPlus $dirCollection)
+    {
+        $list = $dirCollection->paginateFileNameList(0, 25, 'single-file');
+
+        $this->assertEquals(10, count($list));
+        $this->assertContains('single-file-2.txt', $list);
+        $this->assertContains('single-file-9.txt', $list);
+        $this->assertNotContains('index.html', $list);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryCollectionPlus::paginateFileNameList
+     * @uses \DCarbone\DirectoryCollectionPlus
+     * @depends testCanConstructDirectoryCollectionPlusWithValidParameter
+     * @param \DCarbone\DirectoryCollectionPlus $dirCollection
+     */
+    public function testCanPaginateFilesWithIncreasedOffsetAndValidSearchParameter(\DCarbone\DirectoryCollectionPlus $dirCollection)
+    {
+        $list = $dirCollection->paginateFileNameList(5, 25, 'single-file');
+
+        $this->assertEquals(6, count($list));
+        $this->assertContains('single-file-5.txt', $list);
+        $this->assertContains('single-file-9.txt', $list);
+        $this->assertNotContains('index.html', $list);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryCollectionPlus::paginateFileNameList
+     * @uses \DCarbone\DirectoryCollectionPlus
+     * @depends testCanConstructDirectoryCollectionPlusWithValidParameter
+     * @param \DCarbone\DirectoryCollectionPlus $dirCollection
+     */
+    public function testCanPaginateFilesWithIncreasedOffsetAndDecreasedLimitAndValidSearchParameter(\DCarbone\DirectoryCollectionPlus $dirCollection)
+    {
+        $list = $dirCollection->paginateFileNameList(5, 3, 'single-file');
+
+        $this->assertEquals(3, count($list));
+        $this->assertContains('single-file-4.txt', $list);
+        $this->assertContains('single-file-6.txt', $list);
+        $this->assertNotContains('single-file-3.txt', $list);
+        $this->assertNotContains('single-file-7.txt', $list);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryCollectionPlus::paginateFileNameList
+     * @uses \DCarbone\DirectoryCollectionPlus
+     * @depends testCanConstructDirectoryCollectionPlusWithValidParameter
+     * @expectedException \InvalidArgumentException
+     * @param \DCarbone\DirectoryCollectionPlus $dirCollection
+     */
+    public function testExceptionThrownByPaginateFileNamesWithInvalidIntegerFirstArgument(\DCarbone\DirectoryCollectionPlus $dirCollection)
+    {
+        $list = $dirCollection->paginateFileNameList(-7);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryCollectionPlus::paginateFileNameList
+     * @uses \DCarbone\DirectoryCollectionPlus
+     * @depends testCanConstructDirectoryCollectionPlusWithValidParameter
+     * @expectedException \InvalidArgumentException
+     * @param \DCarbone\DirectoryCollectionPlus $dirCollection
+     */
+    public function testExceptionThrownByPaginateFileNamesWithNonIntegerFirstArgument(\DCarbone\DirectoryCollectionPlus $dirCollection)
+    {
+        $list = $dirCollection->paginateFileNameList('forty seven');
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryCollectionPlus::paginateFileNameList
+     * @uses \DCarbone\DirectoryCollectionPlus
+     * @depends testCanConstructDirectoryCollectionPlusWithValidParameter
+     * @expectedException \InvalidArgumentException
+     * @param \DCarbone\DirectoryCollectionPlus $dirCollection
+     */
+    public function testExceptionThrownByPaginateFileNameListWithNonIntegerSecondArgument(\DCarbone\DirectoryCollectionPlus $dirCollection)
+    {
+        $list = $dirCollection->paginateFileNameList(0, 'seventy 2');
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryCollectionPlus::paginateFileNameList
+     * @uses \DCarbone\DirectoryCollectionPlus
+     * @depends testCanConstructDirectoryCollectionPlusWithValidParameter
+     * @expectedException \InvalidArgumentException
+     * @param \DCarbone\DirectoryCollectionPlus $dirCollection
+     */
+    public function testExceptionThrownByPaginateFileNameListWithInvalidIntegerSecondArgument(\DCarbone\DirectoryCollectionPlus $dirCollection)
+    {
+        $list = $dirCollection->paginateFileNameList(0, -42);
+    }
 }

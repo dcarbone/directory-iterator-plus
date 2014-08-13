@@ -203,4 +203,81 @@ class DirectoryCollectionPlus extends \DirectoryIterator
         $this->rewind();
         return $found;
     }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @param mixed $search
+     * @return array
+     * @throws \InvalidArgumentException
+     */
+    public function paginateFileNameList($offset = 0, $limit = 25, $search = null)
+    {
+        if (!is_int($offset))
+            throw new \InvalidArgumentException('DirectoryCollectionPlus::paginateFileNameList - Argument 1 expected to be integer, '.gettype($offset).' seen.');
+        if ($offset < 0)
+            throw new \InvalidArgumentException('DirectoryCollectionPlus::paginateFileNameLIst - Argument 1 expected to be >= 0, "'.$offset.'" seen.');
+
+        if (!is_int($limit))
+            throw new \InvalidArgumentException('DirectoryCollectionPlus::paginateFileNameList - Argument 2 expected to be integer, '.gettype($limit).' seen.');
+        if ($limit < -1)
+            throw new \InvalidArgumentException('DirectoryCollectionPlus::paginateFileNameLIst - Argument 2 must be >= -1, "'.$limit.'" seen.');
+
+        if ($search !== null && !is_scalar($search))
+            throw new \InvalidArgumentException('DirectoryCollectionPlus::paginateFileNameList - Argument 3 expected to be scalar value or null, '.gettype($search).' seen.');
+
+        $filei = 0;
+
+        if ($limit === -1)
+            $limit = $this->fileCount;
+
+        $listTotal = 0;
+        $list = array();
+        if ($search === null)
+        {
+            $this->rewind();
+            while($this->valid())
+            {
+                if ($listTotal === $limit)
+                    break;
+
+                $current = $this->current();
+                if ($current->isFile())
+                {
+                    if (++$filei >= $offset)
+                    {
+                        $list[] = $current->getFilename();
+                        $listTotal++;
+                    }
+                }
+                $this->next();
+            }
+        }
+        else
+        {
+            $search = (string)$search;
+
+            $this->rewind();
+            while($this->valid())
+            {
+                if ($listTotal === $limit)
+                    break;
+
+                $current = $this->current();
+                if ($current->isFile() && stripos($current->getFilename(), $search) !== false)
+                {
+                    if (++$filei >= $offset)
+                    {
+                        $list[] = $current->getFilename();
+                        $listTotal++;
+                    }
+                }
+                $this->next();
+            }
+        }
+
+        $this->rewind();
+
+        return $list;
+    }
 }
