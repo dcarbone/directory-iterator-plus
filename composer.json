@@ -1,0 +1,32 @@
+{
+    "name" : "dcarbone/directory-collection-plus",
+    "type" : "library",
+    "description" : "A PHP class designed to directories with lots of files easier to consume in code",
+
+    "keywords": [
+        "php"
+    ],
+    "homepage": "https://github.com/dcarbone/directory-collection-plus",
+    "license": "GPLv3",
+
+    "authors" : [
+        {
+            "name" : "Daniel Carbone",
+            "email" : "daniel.p.carbone@gmail.com"
+        }
+    ],
+
+    "require" : {
+        "php" : ">=5.3.3"
+    },
+
+    "require-dev" : {
+        "phpunit/phpunit": "4.1.*"
+    },
+
+    "autoload" : {
+        "psr-4" : {
+            "DCarbone\\" : "src/"
+        }
+    }
+}
