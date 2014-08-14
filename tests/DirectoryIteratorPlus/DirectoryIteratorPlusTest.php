@@ -374,10 +374,6 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
         $list = $dirIterator->paginateFilenames(5, 25, 'single-file');
 
         $this->assertCount(5, $list);
-
-        $this->assertContains('single-file-5.txt', $list);
-        $this->assertContains('single-file-9.txt', $list);
-        $this->assertNotContains('index.html', $list);
     }
 
     /**
