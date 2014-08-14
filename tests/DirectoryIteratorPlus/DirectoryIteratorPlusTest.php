@@ -295,9 +295,6 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
         $list = $dirIterator->paginateFilenames();
 
         $this->assertCount(11, $list);
-
-        $this->assertContains('index.html', $list);
-        $this->assertContains('single-file-9.txt', $list);
     }
 
     /**
@@ -311,10 +308,6 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
         $list = $dirIterator->paginateFilenames(5);
 
         $this->assertCount(6, $list);
-
-        $this->assertContains('single-file-4.txt', $list);
-        $this->assertContains('single-file-9.txt', $list);
-        $this->assertNotContains('single-file-3.txt', $list);
     }
 
     /**
@@ -328,9 +321,6 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
         $list = $dirIterator->paginateFilenames(0, 5);
 
         $this->assertCount(5, $list);
-
-        $this->assertContains('single-file-0.txt', $list);
-        $this->assertNotContains('single-file-4.txt', $list);
     }
 
     /**
@@ -344,11 +334,6 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
         $list = $dirIterator->paginateFilenames(3, 5);
 
         $this->assertCount(5, $list);
-
-        $this->assertContains('single-file-2.txt', $list);
-        $this->assertContains('single-file-6.txt', $list);
-        $this->assertNotContains('index.html', $list);
-        $this->assertNotContains('single-file-7.txt', $list);
     }
 
     /**
@@ -376,10 +361,6 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
         $list = $dirIterator->paginateFilenames(0, 25, 'single-file');
 
         $this->assertCount(10, $list);
-
-        $this->assertContains('single-file-2.txt', $list);
-        $this->assertContains('single-file-9.txt', $list);
-        $this->assertNotContains('index.html', $list);
     }
 
     /**
@@ -410,11 +391,6 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
         $list = $dirIterator->paginateFilenames(5, 3, 'single-file');
 
         $this->assertCount(3, $list);
-
-        $this->assertContains('single-file-5.txt', $list);
-        $this->assertContains('single-file-7.txt', $list);
-        $this->assertNotContains('single-file-4.txt', $list);
-        $this->assertNotContains('single-file-8.txt', $list);
     }
 
     /**
@@ -483,9 +459,6 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             '\\DCarbone\\DirectoryIteratorPlus',
             $list[10]);
-
-        $this->assertEquals('index.html', $list[0]->getFilename());
-        $this->assertEquals('single-file-9.txt', $list[10]->getFilename());
     }
 
     /**
@@ -506,9 +479,6 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             '\\DCarbone\\DirectoryIteratorPlus',
             $list[5]);
-
-        $this->assertEquals('single-file-4.txt', $list[0]->getFilename());
-        $this->assertEquals('single-file-9.txt', $list[5]->getFilename());
     }
 
     /**
@@ -529,9 +499,6 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             '\\DCarbone\\DirectoryIteratorPlus',
             $list[4]);
-        
-        $this->assertEquals('index.html', $list[0]->getFilename());
-        $this->assertEquals('single-file-3.txt', $list[4]->getFilename());
     }
 
     /**
@@ -552,9 +519,6 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             '\\DCarbone\\DirectoryIteratorPlus',
             $list[4]);
-
-        $this->assertEquals('single-file-2.txt', $list[0]->getFilename());
-        $this->assertEquals('single-file-6.txt', $list[4]->getFilename());
     }
 
     /**
@@ -589,9 +553,6 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             '\\DCarbone\\DirectoryIteratorPlus',
             $list[9]);
-
-        $this->assertEquals('single-file-0.txt', $list[0]->getFilename());
-        $this->assertEquals('single-file-9.txt', $list[9]->getFilename());
     }
 
     /**
@@ -612,9 +573,6 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             '\\DCarbone\\DirectoryIteratorPlus',
             $list[4]);
-
-        $this->assertEquals('single-file-5.txt', $list[0]->getFilename());
-        $this->assertEquals('single-file-9.txt', $list[4]->getFilename());
     }
 
     /**
@@ -635,9 +593,6 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             '\\DCarbone\\DirectoryIteratorPlus',
             $list[2]);
-
-        $this->assertEquals('single-file-5.txt', $list[0]->getFilename());
-        $this->assertEquals('single-file-7.txt', $list[2]->getFilename());
     }
 
     /**

@@ -34,7 +34,7 @@ class DirectoryIteratorPlus extends \DirectoryIterator
         if ($realpath !== false)
         {
             if (DIRECTORY_SEPARATOR === '/')
-                $this->fileCount = (int)trim(shell_exec('ls -1 "'.$realpath.'" | wc -l'));
+                $this->fileCount = (int)trim(shell_exec('find "'.$realpath.'" -maxdepth 1 -type f | wc -l'));
             else
                 $this->fileCount = (int)trim(shell_exec('DIR /A-D /B "'.$realpath.'" | FIND /C /V ""'));
 
@@ -84,6 +84,34 @@ class DirectoryIteratorPlus extends \DirectoryIterator
     public function getDirectoryCount()
     {
         return $this->directoryCount;
+    }
+
+    /**
+     * @param string $string
+     * @throws \InvalidArgumentException
+     * @return int
+     */
+    public function getDirectoryCountSearch($string)
+    {
+        if (!is_string($string))
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::getFileCountSearch - Argument 1 expected to be string, '.gettype($string).' seen.');
+
+        $string = trim($string);
+        if ($string === '')
+            return $this->getFileCount();
+
+        $count = 0;
+        while ($this->valid())
+        {
+            $current = $this->current();
+            if ($current->isFile() && stripos($current->getFilename(), $string) !== false)
+                $count++;
+
+            $this->next();
+        }
+        $this->rewind();
+
+        return $count;
     }
 
     /**
