@@ -51,6 +51,34 @@ class DirectoryIteratorPlus extends \DirectoryIterator
     }
 
     /**
+     * @param string $string
+     * @throws \InvalidArgumentException
+     * @return int
+     */
+    public function getFileCountSearch($string)
+    {
+        if (!is_string($string))
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::getFileCountSearch - Argument 1 expected to be string, '.gettype($string).' seen.');
+
+        $string = trim($string);
+        if ($string === '')
+            return $this->getFileCount();
+
+        $count = 0;
+        while ($this->valid())
+        {
+            $current = $this->current();
+            if ($current->isFile() && stripos($current->getFilename(), $string) !== false)
+                $count++;
+
+            $this->next();
+        }
+        $this->rewind();
+
+        return $count;
+    }
+
+    /**
      * @return int
      */
     public function getDirectoryCount()

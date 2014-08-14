@@ -14,13 +14,13 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testCanConstructDirectoryIteratorPlusWithValidParameter()
     {
-        $dirCollection = new \DCarbone\DirectoryIteratorPlus(__DIR__.'/../misc/couple-of-files');
+        $dirIterator = new \DCarbone\DirectoryIteratorPlus(__DIR__.'/../misc/couple-of-files');
 
         $this->assertInstanceOf(
             '\\DCarbone\\DirectoryIteratorPlus',
-            $dirCollection);
+            $dirIterator);
 
-        return $dirCollection;
+        return $dirIterator;
     }
 
     /**
@@ -30,7 +30,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownWhenNonStringValuePassedToConstructor()
     {
-        $dirCollection = new \DCarbone\DirectoryIteratorPlus(1000000);
+        $dirIterator = new \DCarbone\DirectoryIteratorPlus(1000000);
     }
 
     /**
@@ -40,18 +40,18 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownWhenInvalidDirectoryValuePassedToConstructor()
     {
-        $dirCollection = new \DCarbone\DirectoryIteratorPlus('hello there.');
+        $dirIterator = new \DCarbone\DirectoryIteratorPlus('hello there.');
     }
 
     /**
      * @covers \DCarbone\DirectoryIteratorPlus::getFileCount
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanGetCountOfFilesInDirectory(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanGetCountOfFilesInDirectory(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $fileCount = $dirCollection->getFileCount();
+        $fileCount = $dirIterator->getFileCount();
 
         $this->assertEquals(11, $fileCount);
     }
@@ -60,11 +60,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCount
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanGetCountOfDirectoriesInDirectory(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanGetCountOfDirectoriesInDirectory(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $dirCount = $dirCollection->getDirectoryCount();
+        $dirCount = $dirIterator->getDirectoryCount();
 
         $this->assertEquals(10, $dirCount);
     }
@@ -73,11 +73,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::containsFile
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsFileWithValidFilename(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testContainsFileWithValidFilename(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsFile('single-file-0.txt');
+        $contains = $dirIterator->containsFile('single-file-0.txt');
 
         $this->assertTrue($contains);
     }
@@ -86,11 +86,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::containsFile
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsFileWithInvalidFilename(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testContainsFileWithInvalidFilename(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsFile('sandwiches');
+        $contains = $dirIterator->containsFile('sandwiches');
 
         $this->assertFalse($contains);
     }
@@ -100,22 +100,22 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @expectedException \InvalidArgumentException
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testExceptionThrownFromMethodContainsFileWithNonStringParameter(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testExceptionThrownFromMethodContainsFileWithNonStringParameter(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsFile(array('nope'));
+        $contains = $dirIterator->containsFile(array('nope'));
     }
 
     /**
      * @covers \DCarbone\DirectoryIteratorPlus::containsFileLike
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsFileLikeWithValidFilenameCaseSensitive(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testContainsFileLikeWithValidFilenameCaseSensitive(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsFileLike('0.txt', false);
+        $contains = $dirIterator->containsFileLike('0.txt', false);
 
         $this->assertTrue($contains);
     }
@@ -124,11 +124,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::containsFileLike
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsFileLikeWithValidFilenameCaseInsensitive(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testContainsFileLikeWithValidFilenameCaseInsensitive(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsFileLike('0.TXT', true);
+        $contains = $dirIterator->containsFileLike('0.TXT', true);
 
         $this->assertTrue($contains);
     }
@@ -137,11 +137,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::containsFileLike
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsFileLikeWithInvalidCaseFilename(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testContainsFileLikeWithInvalidCaseFilename(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsFileLike('0.TXT', false);
+        $contains = $dirIterator->containsFileLike('0.TXT', false);
 
         $this->assertFalse($contains);
     }
@@ -150,11 +150,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::containsFileLike
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsFileLikeWithInvalidFilename(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testContainsFileLikeWithInvalidFilename(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsFileLike('sandwiches');
+        $contains = $dirIterator->containsFileLike('sandwiches');
 
         $this->assertFalse($contains);
     }
@@ -164,11 +164,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @uses \DCarbone\DirectoryIteratorPlus
      * @expectedException \InvalidArgumentException
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testExceptionThrownByContainsFileLikeWithNonStringFirstArgument(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testExceptionThrownByContainsFileLikeWithNonStringFirstArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsFileLike(array('nope'));
+        $contains = $dirIterator->containsFileLike(array('nope'));
     }
 
     /**
@@ -176,22 +176,22 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @expectedException \InvalidArgumentException
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testExceptionThrownByContainsFileLikeWithNonBoolSecondArgument(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testExceptionThrownByContainsFileLikeWithNonBoolSecondArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsFileLike('0.txt', 'super true');
+        $contains = $dirIterator->containsFileLike('0.txt', 'super true');
     }
 
     /**
      * @covers \DCarbone\DirectoryIteratorPlus::containsDirectory
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsDirectoryWithValidDirName(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testContainsDirectoryWithValidDirName(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsDirectory('directory-0');
+        $contains = $dirIterator->containsDirectory('directory-0');
 
         $this->assertTrue($contains);
     }
@@ -200,11 +200,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::containsDirectory
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsDirectoryWithInvalidDirName(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testContainsDirectoryWithInvalidDirName(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsDirectory('sandwiches');
+        $contains = $dirIterator->containsDirectory('sandwiches');
 
         $this->assertFalse($contains);
     }
@@ -214,22 +214,22 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @expectedException \InvalidArgumentException
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testExceptionThrownByContainsDirectoryWithNonStringParameter(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testExceptionThrownByContainsDirectoryWithNonStringParameter(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsDirectory(array('haha'));
+        $contains = $dirIterator->containsDirectory(array('haha'));
     }
 
     /**
      * @covers \DCarbone\DirectoryIteratorPlus::containsDirectoryLike
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsDirectoryLikeWithValidDirNameCaseSensitive(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testContainsDirectoryLikeWithValidDirNameCaseSensitive(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsDirectoryLike('ory-0', false);
+        $contains = $dirIterator->containsDirectoryLike('ory-0', false);
 
         $this->assertTrue($contains);
     }
@@ -238,11 +238,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::containsDirectoryLike
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsDirectoryLikeWithValidDirNameCaseInsensitive(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testContainsDirectoryLikeWithValidDirNameCaseInsensitive(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsDirectoryLike('ORY-9', true);
+        $contains = $dirIterator->containsDirectoryLike('ORY-9', true);
 
         $this->assertTrue($contains);
     }
@@ -251,11 +251,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::containsDirectoryLike
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsDirectoryLikeWithInvalidCaseDirName(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testContainsDirectoryLikeWithInvalidCaseDirName(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsDirectoryLike('ORY-0', false);
+        $contains = $dirIterator->containsDirectoryLike('ORY-0', false);
 
         $this->assertFalse($contains);
     }
@@ -265,11 +265,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @expectedException \InvalidArgumentException
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testExceptionThrownByContainsDirectoryLikeWithNonStringFirstArgument(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testExceptionThrownByContainsDirectoryLikeWithNonStringFirstArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsDirectoryLike(42);
+        $contains = $dirIterator->containsDirectoryLike(42);
     }
 
     /**
@@ -277,22 +277,22 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @expectedException \InvalidArgumentException
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testExceptionThrownByContainsDirectoryLikeWithNonBoolSecondArgument(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testExceptionThrownByContainsDirectoryLikeWithNonBoolSecondArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirCollection->containsDirectoryLike('ory-0', 'no way, bro');
+        $contains = $dirIterator->containsDirectoryLike('ory-0', 'no way, bro');
     }
 
     /**
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFilenames
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanPaginateFilenamesInDirectoryWithDefaultValues(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanPaginateFilenamesInDirectoryWithDefaultValues(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFilenames();
+        $list = $dirIterator->paginateFilenames();
 
         $this->assertEquals(11, count($list));
         $this->assertContains('index.html', $list);
@@ -303,11 +303,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFilenames
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanPaginateFilenamesInDirectoryWithIncreasedValidOffset(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanPaginateFilenamesInDirectoryWithIncreasedValidOffset(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFilenames(5);
+        $list = $dirIterator->paginateFilenames(5);
 
         $this->assertEquals(7, count($list));
         $this->assertContains('single-file-3.txt', $list);
@@ -319,11 +319,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFilenames
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanPaginateFilenamesInDirectoryWithDecreasedLimit(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanPaginateFilenamesInDirectoryWithDecreasedLimit(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFilenames(0, 5);
+        $list = $dirIterator->paginateFilenames(0, 5);
 
         $this->assertEquals(5, count($list));
         $this->assertContains('single-file-0.txt', $list);
@@ -334,11 +334,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFilenames
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanPaginateFilenamesInDirectoryWithIncreasedOffsetAndDecreasedLimit(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanPaginateFilenamesInDirectoryWithIncreasedOffsetAndDecreasedLimit(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFilenames(3, 5);
+        $list = $dirIterator->paginateFilenames(3, 5);
 
         $this->assertEquals(5, count($list));
         $this->assertContains('single-file-3.txt', $list);
@@ -351,11 +351,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFilenames
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanGetEmptyArrayFromPaginateFilenamesWithLargerThanCountOffset(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanGetEmptyArrayFromPaginateFilenamesWithLargerThanCountOffset(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFilenames(9000);
+        $list = $dirIterator->paginateFilenames(9000);
 
         $this->assertTrue(is_array($list));
         $this->assertEquals(0, count($list));
@@ -365,11 +365,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFilenames
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanPaginateFilenamesInDirectoryWithDefaultOffsetLimitAndValidSearchParameter(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanPaginateFilenamesInDirectoryWithDefaultOffsetLimitAndValidSearchParameter(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFilenames(0, 25, 'single-file');
+        $list = $dirIterator->paginateFilenames(0, 25, 'single-file');
 
         $this->assertEquals(10, count($list));
         $this->assertContains('single-file-2.txt', $list);
@@ -381,11 +381,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFilenames
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanPaginateFilenamesWithIncreasedOffsetAndValidSearchParameter(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanPaginateFilenamesWithIncreasedOffsetAndValidSearchParameter(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFilenames(5, 25, 'single-file');
+        $list = $dirIterator->paginateFilenames(5, 25, 'single-file');
 
         $this->assertEquals(6, count($list));
         $this->assertContains('single-file-5.txt', $list);
@@ -397,11 +397,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFilenames
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanPaginateFilenamesWithIncreasedOffsetAndDecreasedLimitAndValidSearchParameter(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanPaginateFilenamesWithIncreasedOffsetAndDecreasedLimitAndValidSearchParameter(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFilenames(5, 3, 'single-file');
+        $list = $dirIterator->paginateFilenames(5, 3, 'single-file');
 
         $this->assertEquals(3, count($list));
         $this->assertContains('single-file-4.txt', $list);
@@ -415,11 +415,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @expectedException \InvalidArgumentException
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testExceptionThrownByPaginateFilenamesWithInvalidIntegerFirstArgument(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testExceptionThrownByPaginateFilenamesWithInvalidIntegerFirstArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFilenames(-7);
+        $list = $dirIterator->paginateFilenames(-7);
     }
 
     /**
@@ -427,11 +427,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @expectedException \InvalidArgumentException
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testExceptionThrownByPaginateFilenamesWithNonIntegerFirstArgument(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testExceptionThrownByPaginateFilenamesWithNonIntegerFirstArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFilenames('forty seven');
+        $list = $dirIterator->paginateFilenames('forty seven');
     }
 
     /**
@@ -439,11 +439,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @expectedException \InvalidArgumentException
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testExceptionThrownByPaginateFilenamesWithNonIntegerSecondArgument(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testExceptionThrownByPaginateFilenamesWithNonIntegerSecondArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFilenames(0, 'seventy 2');
+        $list = $dirIterator->paginateFilenames(0, 'seventy 2');
     }
 
     /**
@@ -451,22 +451,22 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @expectedException \InvalidArgumentException
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testExceptionThrownByPaginateFilenamesWithInvalidIntegerSecondArgument(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testExceptionThrownByPaginateFilenamesWithInvalidIntegerSecondArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFilenames(0, -42);
+        $list = $dirIterator->paginateFilenames(0, -42);
     }
 
     /**
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFiles
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanPaginateFilesInDirectoryWithDefaultValues(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanPaginateFilesInDirectoryWithDefaultValues(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFiles();
+        $list = $dirIterator->paginateFiles();
 
         $this->assertEquals(11, count($list));
 
@@ -482,11 +482,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFiles
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanPaginateFilesInDirectoryWithIncreasedValidOffset(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanPaginateFilesInDirectoryWithIncreasedValidOffset(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFiles(5);
+        $list = $dirIterator->paginateFiles(5);
 
         $this->assertEquals(7, count($list));
         $this->assertInstanceOf(
@@ -504,11 +504,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFiles
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanPaginateFilesInDirectoryWithDecreasedLimit(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanPaginateFilesInDirectoryWithDecreasedLimit(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFiles(0, 5);
+        $list = $dirIterator->paginateFiles(0, 5);
 
         $this->assertEquals(5, count($list));
         
@@ -527,11 +527,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFiles
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanPaginateFilesInDirectoryWithIncreasedOffsetAndDecreasedLimit(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanPaginateFilesInDirectoryWithIncreasedOffsetAndDecreasedLimit(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFiles(3, 5);
+        $list = $dirIterator->paginateFiles(3, 5);
 
         $this->assertEquals(5, count($list));
 
@@ -550,11 +550,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFiles
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanGetEmptyArrayFromPaginateFilesWithLargerThanCountOffset(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanGetEmptyArrayFromPaginateFilesWithLargerThanCountOffset(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFiles(9000);
+        $list = $dirIterator->paginateFiles(9000);
 
         $this->assertTrue(is_array($list));
         $this->assertEquals(0, count($list));
@@ -564,11 +564,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFiles
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanPaginateFilesInDirectoryWithDefaultOffsetLimitAndValidSearchParameter(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanPaginateFilesInDirectoryWithDefaultOffsetLimitAndValidSearchParameter(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFiles(0, 25, 'single-file');
+        $list = $dirIterator->paginateFiles(0, 25, 'single-file');
 
         $this->assertEquals(10, count($list));
 
@@ -587,11 +587,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFiles
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanPaginateFilesWithIncreasedOffsetAndValidSearchParameter(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanPaginateFilesWithIncreasedOffsetAndValidSearchParameter(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFiles(5, 25, 'single-file');
+        $list = $dirIterator->paginateFiles(5, 25, 'single-file');
 
         $this->assertEquals(6, count($list));
 
@@ -610,11 +610,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @covers \DCarbone\DirectoryIteratorPlus::paginateFiles
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testCanPaginateFilesWithIncreasedOffsetAndDecreasedLimitAndValidSearchParameter(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testCanPaginateFilesWithIncreasedOffsetAndDecreasedLimitAndValidSearchParameter(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFiles(5, 3, 'single-file');
+        $list = $dirIterator->paginateFiles(5, 3, 'single-file');
 
         $this->assertEquals(3, count($list));
 
@@ -634,11 +634,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @expectedException \InvalidArgumentException
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testExceptionThrownByPaginateFilesWithInvalidIntegerFirstArgument(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testExceptionThrownByPaginateFilesWithInvalidIntegerFirstArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFiles(-7);
+        $list = $dirIterator->paginateFiles(-7);
     }
 
     /**
@@ -646,11 +646,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @expectedException \InvalidArgumentException
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testExceptionThrownByPaginateFilesWithNonIntegerFirstArgument(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testExceptionThrownByPaginateFilesWithNonIntegerFirstArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFiles('forty seven');
+        $list = $dirIterator->paginateFiles('forty seven');
     }
 
     /**
@@ -658,11 +658,11 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @expectedException \InvalidArgumentException
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testExceptionThrownByPaginateFilesWithNonIntegerSecondArgument(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testExceptionThrownByPaginateFilesWithNonIntegerSecondArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFiles(0, 'seventy 2');
+        $list = $dirIterator->paginateFiles(0, 'seventy 2');
     }
 
     /**
@@ -670,10 +670,63 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @expectedException \InvalidArgumentException
-     * @param \DCarbone\DirectoryIteratorPlus $dirCollection
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testExceptionThrownByPaginateFilesWithInvalidIntegerSecondArgument(\DCarbone\DirectoryIteratorPlus $dirCollection)
+    public function testExceptionThrownByPaginateFilesWithInvalidIntegerSecondArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirCollection->paginateFiles(0, -42);
+        $list = $dirIterator->paginateFiles(0, -42);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryIteratorPlus::getFileCountSearch
+     * @uses \DCarbone\DirectoryIteratorPlus
+     * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
+     */
+    public function testCanGetCountOfFilesWithValidSearchTerm(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    {
+        $searchCount = $dirIterator->getFileCountSearch('index');
+
+        $this->assertEquals(1, $searchCount);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryIteratorPlus::getFileCountSearch
+     * @uses \DCarbone\DirectoryIteratorPlus
+     * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
+     */
+    public function testCanGetZeroResponseFromFileCountWithInvalidSearchTerm(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    {
+        $searchCount = $dirIterator->getFileCountSearch('i don\'t exist!');
+
+        $this->assertEquals(0, $searchCount);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryIteratorPlus::getFileCount
+     * @covers \DCarbone\DirectoryIteratorPlus::getFileCountSearch
+     * @uses \DCarbone\DirectoryIteratorPlus
+     * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
+     */
+    public function testCanGetCountOfAllFilesIfEmptyStringPassedToFileCountSearch(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    {
+        $count = $dirIterator->getFileCount();
+        $searchCount = $dirIterator->getFileCountSearch('');
+
+        $this->assertEquals($count, $searchCount);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryIteratorPlus::getFileCountSearch
+     * @uses \DCarbone\DirectoryIteratorPlus
+     * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
+     * @expectedException \InvalidArgumentException
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
+     */
+    public function testExceptionThrownByGetFileCountSearchWhenNonStringTermUsed(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    {
+        $searchCount = $dirIterator->getFileCountSearch(array('nope'));
     }
 }
