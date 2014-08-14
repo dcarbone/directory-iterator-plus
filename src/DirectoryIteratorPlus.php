@@ -55,10 +55,10 @@ class DirectoryIteratorPlus extends \DirectoryIterator
      * @throws \InvalidArgumentException
      * @return int
      */
-    public function getFileCountSearch($string)
+    public function getFileCountLike($string)
     {
         if (!is_string($string))
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::getFileCountSearch - Argument 1 expected to be string, '.gettype($string).' seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::getFileCountLike - Argument 1 expected to be string, '.gettype($string).' seen.');
 
         $string = trim($string);
         if ($string === '')
@@ -91,10 +91,10 @@ class DirectoryIteratorPlus extends \DirectoryIterator
      * @throws \InvalidArgumentException
      * @return int
      */
-    public function getDirectoryCountSearch($string)
+    public function getDirectoryCountLike($string)
     {
         if (!is_string($string))
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::getFileCountSearch - Argument 1 expected to be string, '.gettype($string).' seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::getDirectoryCountLike - Argument 1 expected to be string, '.gettype($string).' seen.');
 
         $string = trim($string);
         if ($string === '')

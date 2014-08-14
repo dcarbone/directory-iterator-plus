@@ -640,34 +640,34 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \DCarbone\DirectoryIteratorPlus::getFileCountSearch
+     * @covers \DCarbone\DirectoryIteratorPlus::getFileCountLike
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
     public function testCanGetCountOfFilesWithValidSearchTerm(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $searchCount = $dirIterator->getFileCountSearch('index');
+        $searchCount = $dirIterator->getFileCountLike('index');
 
         $this->assertEquals(1, $searchCount);
     }
 
     /**
-     * @covers \DCarbone\DirectoryIteratorPlus::getFileCountSearch
+     * @covers \DCarbone\DirectoryIteratorPlus::getFileCountLike
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
     public function testCanGetZeroResponseFromFileCountWithInvalidSearchTerm(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $searchCount = $dirIterator->getFileCountSearch('i don\'t exist!');
+        $searchCount = $dirIterator->getFileCountLike('i don\'t exist!');
 
         $this->assertEquals(0, $searchCount);
     }
 
     /**
      * @covers \DCarbone\DirectoryIteratorPlus::getFileCount
-     * @covers \DCarbone\DirectoryIteratorPlus::getFileCountSearch
+     * @covers \DCarbone\DirectoryIteratorPlus::getFileCountLike
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
@@ -675,13 +675,13 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
     public function testCanGetCountOfAllFilesIfEmptyStringPassedToFileCountSearch(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
         $count = $dirIterator->getFileCount();
-        $searchCount = $dirIterator->getFileCountSearch('');
+        $searchCount = $dirIterator->getFileCountLike('');
 
         $this->assertEquals($count, $searchCount);
     }
 
     /**
-     * @covers \DCarbone\DirectoryIteratorPlus::getFileCountSearch
+     * @covers \DCarbone\DirectoryIteratorPlus::getFileCountLike
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @expectedException \InvalidArgumentException
@@ -689,37 +689,37 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByGetFileCountSearchWhenNonStringTermUsed(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $searchCount = $dirIterator->getFileCountSearch(array('nope'));
+        $searchCount = $dirIterator->getFileCountLike(array('nope'));
     }
 
     /**
-     * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCountSearch
+     * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCountLike
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
     public function testCanGetCountOfDirsWithValidSearchTerm(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $searchCount = $dirIterator->getDirectoryCountSearch('ory-1');
+        $searchCount = $dirIterator->getDirectoryCountLike('ory-1');
 
         $this->assertEquals(1, $searchCount);
     }
 
     /**
-     * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCountSearch
+     * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCountLike
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
     public function testCanGetZeroResponseFromDirCountWithInvalidSearchTerm(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $searchCount = $dirIterator->getDirectoryCountSearch('hellow there!');
+        $searchCount = $dirIterator->getDirectoryCountLike('hellow there!');
 
         $this->assertEquals(0, $searchCount);
     }
 
     /**
-     * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCountSearch
+     * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCountLike
      * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCount
      * @uses \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
@@ -733,7 +733,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCountSearch
+     * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCountLike
      * @covers \DCarbone\DirectoryIteratorPlus
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @expectedException \InvalidArgumentException
@@ -741,6 +741,6 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByDirCountSearchIfNonStringValuePassed(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $searchCount = $dirIterator->getDirectoryCountSearch(array('hi'));
+        $searchCount = $dirIterator->getDirectoryCountLike(array('hi'));
     }
 }
