@@ -8,7 +8,7 @@ A simple extension of the PHP `\DirectoryIterator` class
 
 ## Installation in your Composer App
 ```json
-"dcarbone/directory-iterator-plus" : "*"
+"dcarbone/directory-iterator-plus" : "0.1.*"
 ```
 
 ## Concept
