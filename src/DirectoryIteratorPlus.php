@@ -98,13 +98,13 @@ class DirectoryIteratorPlus extends \DirectoryIterator
 
         $string = trim($string);
         if ($string === '')
-            return $this->getFileCount();
+            return $this->getDirectoryCount();
 
         $count = 0;
         while ($this->valid())
         {
             $current = $this->current();
-            if ($current->isFile() && stripos($current->getFilename(), $string) !== false)
+            if ($current->isDir() && stripos($current->getFilename(), $string) !== false)
                 $count++;
 
             $this->next();

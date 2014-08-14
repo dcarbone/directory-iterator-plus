@@ -691,4 +691,56 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
     {
         $searchCount = $dirIterator->getFileCountSearch(array('nope'));
     }
+
+    /**
+     * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCountSearch
+     * @uses \DCarbone\DirectoryIteratorPlus
+     * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
+     */
+    public function testCanGetCountOfDirsWithValidSearchTerm(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    {
+        $searchCount = $dirIterator->getDirectoryCountSearch('ory-1');
+
+        $this->assertEquals(1, $searchCount);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCountSearch
+     * @uses \DCarbone\DirectoryIteratorPlus
+     * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
+     */
+    public function testCanGetZeroResponseFromDirCountWithInvalidSearchTerm(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    {
+        $searchCount = $dirIterator->getDirectoryCountSearch('hellow there!');
+
+        $this->assertEquals(0, $searchCount);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCountSearch
+     * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCount
+     * @uses \DCarbone\DirectoryIteratorPlus
+     * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
+     */
+    public function testCanGetCountOfAllDirsIfEmptyStringPassedToDirSearch(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    {
+        $searchCount = $dirIterator->getDirectoryCount('');
+
+        $this->assertEquals($dirIterator->getDirectoryCount(), $searchCount);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCountSearch
+     * @covers \DCarbone\DirectoryIteratorPlus
+     * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
+     * @expectedException \InvalidArgumentException
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
+     */
+    public function testExceptionThrownByDirCountSearchIfNonStringValuePassed(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    {
+        $searchCount = $dirIterator->getDirectoryCountSearch(array('hi'));
+    }
 }
