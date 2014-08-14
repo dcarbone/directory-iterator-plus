@@ -4,7 +4,15 @@
     "description" : "A simple extension of the PHP \\DirectoryIterator class",
 
     "keywords": [
-        "php"
+        "php",
+        "directory",
+        "search",
+        "file pagination",
+        "directory pagination",
+        "directoryiterator",
+        "directory iterator",
+        "directory search",
+        "file search"
     ],
     "homepage": "https://github.com/dcarbone/directory-iterator-plus",
     "license": "GPLv3",
