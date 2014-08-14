@@ -195,7 +195,7 @@ class DirectoryIteratorPlus extends \DirectoryIterator
     public function containsDirectory($directory)
     {
         if (!is_string($directory))
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::containsFile - Argument 1 expected to be string, '.gettype($directory).' seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::containsDirectory - Argument 1 expected to be string, '.gettype($directory).' seen.');
 
         $found = false;
         $this->rewind();
@@ -222,10 +222,10 @@ class DirectoryIteratorPlus extends \DirectoryIterator
     public function containsDirectoryLike($string, $caseInsensitive = false)
     {
         if (!is_string($string))
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::containsFileLike - Argument 1 expected to be string, '.gettype($string).' seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::containsDirectoryLike - Argument 1 expected to be string, '.gettype($string).' seen.');
 
         if (!is_bool($caseInsensitive))
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::containsFileLike - Argument 2 expected to be bool, '.gettype($caseInsensitive).' seen.');
+            throw new \InvalidArgumentException('DirectoryIteratorPlus::containsDirectoryLike - Argument 2 expected to be bool, '.gettype($caseInsensitive).' seen.');
 
         $found = false;
         $this->rewind();
