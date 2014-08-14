@@ -256,6 +256,9 @@ class DirectoryIteratorPlus extends \DirectoryIterator
 
         $filei = 0;
 
+        if ($offset === 0)
+            $offset = -1;
+
         if ($limit === -1)
             $limit = $this->fileCount;
 
@@ -272,7 +275,7 @@ class DirectoryIteratorPlus extends \DirectoryIterator
                 $current = $this->current();
                 if ($current->isFile())
                 {
-                    if (++$filei >= $offset)
+                    if ($filei++ >= $offset)
                     {
                         $list[] = $current->getFilename();
                         $listTotal++;
@@ -294,7 +297,7 @@ class DirectoryIteratorPlus extends \DirectoryIterator
                 $current = $this->current();
                 if ($current->isFile() && stripos($current->getFilename(), $search) !== false)
                 {
-                    if (++$filei >= $offset)
+                    if ($filei++ >= $offset)
                     {
                         $list[] = $current->getFilename();
                         $listTotal++;
@@ -336,6 +339,9 @@ class DirectoryIteratorPlus extends \DirectoryIterator
         if ($limit === -1)
             $limit = $this->fileCount;
 
+        if ($offset === 0)
+            $offset = -1;
+
         $listTotal = 0;
         $list = array();
         if ($search === null)
@@ -349,7 +355,7 @@ class DirectoryIteratorPlus extends \DirectoryIterator
                 $current = $this->current();
                 if ($current->isFile())
                 {
-                    if (++$filei >= $offset)
+                    if ($filei++ >= $offset)
                     {
                         $list[] = clone $current;
                         $listTotal++;
@@ -371,7 +377,7 @@ class DirectoryIteratorPlus extends \DirectoryIterator
                 $current = $this->current();
                 if ($current->isFile() && stripos($current->getFilename(), $search) !== false)
                 {
-                    if (++$filei >= $offset)
+                    if ($filei++ >= $offset)
                     {
                         $list[] = clone $current;
                         $listTotal++;
