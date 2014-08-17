@@ -38,9 +38,19 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @uses \DCarbone\DirectoryIteratorPlus
      * @expectedException \RuntimeException
      */
-    public function testExceptionThrownWhenInvalidDirectoryValuePassedToConstructor()
+    public function testExceptionThrownWhenNonExistentPathValuePassedToConstructor()
     {
         $dirIterator = new \DCarbone\DirectoryIteratorPlus('hello there.');
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryIteratorPlus::__construct
+     * @uses \DCarbone\DirectoryIteratorPlus
+     * @expectedException \RuntimeException
+     */
+    public function testExceptionThrownWhenValidNonDirectoryPathPassedToConstructor()
+    {
+        $dirIterator = new \DCarbone\DirectoryIteratorPlus(__FILE__);
     }
 
     /**
@@ -75,7 +85,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsFileWithValidFilename(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    public function testContainsFileReturnsTrueWithValidFilename(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
         $contains = $dirIterator->containsFile('single-file-0.txt');
 
@@ -88,7 +98,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsFileWithInvalidFilename(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    public function testContainsFileReturnsFalseWithInvalidFilename(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
         $contains = $dirIterator->containsFile('sandwiches');
 
@@ -102,7 +112,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testExceptionThrownFromMethodContainsFileWithNonStringParameter(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    public function testExceptionThrownByContainsFileWhenNonStringParameterPassed(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
         $contains = $dirIterator->containsFile(array('nope'));
     }
@@ -113,7 +123,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsFileLikeWithValidFilenameCaseSensitive(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    public function testContainsFileLikeReturnsTrueWithValidFilenameCaseSensitive(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
         $contains = $dirIterator->containsFileLike('0.txt', false);
 
@@ -126,7 +136,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsFileLikeWithValidFilenameCaseInsensitive(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    public function testContainsFileLikeReturnsTrueWithValidFilenameCaseInsensitive(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
         $contains = $dirIterator->containsFileLike('0.TXT', true);
 
@@ -139,7 +149,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsFileLikeWithInvalidCaseFilename(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    public function testContainsFileLikeReturnsFalseWithInvalidCaseFilename(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
         $contains = $dirIterator->containsFileLike('0.TXT', false);
 
@@ -152,7 +162,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsFileLikeWithInvalidFilename(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    public function testContainsFileLikeReturnsFalseWithInvalidFilename(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
         $contains = $dirIterator->containsFileLike('sandwiches');
 
@@ -189,7 +199,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsDirectoryWithValidDirName(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    public function testContainsDirectoryReturnsTrueWithValidDirName(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
         $contains = $dirIterator->containsDirectory('directory-0');
 
@@ -202,7 +212,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsDirectoryWithInvalidDirName(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    public function testContainsDirectoryReturnsFalseWithInvalidDirName(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
         $contains = $dirIterator->containsDirectory('sandwiches');
 
@@ -227,7 +237,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsDirectoryLikeWithValidDirNameCaseSensitive(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    public function testContainsDirectoryLikeReturnsTrueWithValidDirNameCaseSensitive(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
         $contains = $dirIterator->containsDirectoryLike('ory-0', false);
 
@@ -240,7 +250,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsDirectoryLikeWithValidDirNameCaseInsensitive(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    public function testContainsDirectoryLikeReturnsTrueWithValidDirNameCaseInsensitive(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
         $contains = $dirIterator->containsDirectoryLike('ORY-9', true);
 
@@ -253,7 +263,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      * @depends testCanConstructDirectoryIteratorPlusWithValidParameter
      * @param \DCarbone\DirectoryIteratorPlus $dirIterator
      */
-    public function testContainsDirectoryLikeWithInvalidCaseDirName(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    public function testContainsDirectoryLikeReturnsFalseWithInvalidCaseDirName(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
         $contains = $dirIterator->containsDirectoryLike('ORY-0', false);
 

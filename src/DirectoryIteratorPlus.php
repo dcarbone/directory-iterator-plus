@@ -24,22 +24,22 @@ class DirectoryIteratorPlus extends \DirectoryIterator
         if (!is_string($path))
             throw new \InvalidArgumentException('DirectoryIterator::__construct - Argument 1 expected to be string, '.gettype($path).' seen.');
 
-        if (!is_dir($path))
-            throw new \RuntimeException('DirectoryIterator::__construct - Argument 1 expected to be valid file path');
-
-        parent::__construct($path);
-
         $realpath = realpath($path);
 
-        if ($realpath !== false)
-        {
-            if (DIRECTORY_SEPARATOR === '/')
-                $this->fileCount = (int)trim(shell_exec('find "'.$realpath.'" -maxdepth 1 -type f | wc -l'));
-            else
-                $this->fileCount = (int)trim(shell_exec('DIR /A-D /B "'.$realpath.'" | FIND /C /V ""'));
+        if ($realpath === false)
+            throw new \RuntimeException('DirectoryIterator::__construct - Could not find specified file at path "'.$path.'".');
 
-            $this->directoryCount = count(glob($realpath.DIRECTORY_SEPARATOR.'*', GLOB_ONLYDIR));
-        }
+        if (!is_dir($realpath))
+            throw new \RuntimeException('DirectoryIterator::__construct - The directory name is invalid.');
+
+        parent::__construct($realpath);
+
+        if (DIRECTORY_SEPARATOR === '/')
+            $this->fileCount = (int)trim(shell_exec('find "'.$realpath.'" -maxdepth 1 -type f | wc -l'));
+        else
+            $this->fileCount = (int)trim(shell_exec('DIR /A-D /B "'.$realpath.'" | FIND /C /V ""'));
+
+        $this->directoryCount = count(glob($realpath.DIRECTORY_SEPARATOR.'*', GLOB_ONLYDIR));
     }
 
     /**
