@@ -58,22 +58,26 @@ class DirectoryIteratorPlus extends \DirectoryIterator
     public function getFileCountLike($string)
     {
         if (!is_string($string))
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::getFileCountLike - Argument 1 expected to be string, '.gettype($string).' seen.');
+            throw new \InvalidArgumentException('Argument 1 expected to be string, '.gettype($string).' seen.');
 
         $string = trim($string);
         if ($string === '')
             return $this->getFileCount();
 
         $count = 0;
-        while ($this->valid())
+
+        parent::rewind();
+
+        while (parent::valid())
         {
-            $current = $this->current();
+            $current = parent::current();
             if ($current->isFile() && stripos($current->getFilename(), $string) !== false)
                 $count++;
 
-            $this->next();
+            parent::next();
         }
-        $this->rewind();
+
+        parent::rewind();
 
         return $count;
     }
@@ -101,15 +105,18 @@ class DirectoryIteratorPlus extends \DirectoryIterator
             return $this->getDirectoryCount();
 
         $count = 0;
-        while ($this->valid())
+
+        parent::rewind();
+
+        while (parent::valid())
         {
-            $current = $this->current();
+            $current = parent::current();
             if ($current->isDir() && stripos($current->getFilename(), $string) !== false)
                 $count++;
 
-            $this->next();
+            parent::next();
         }
-        $this->rewind();
+        parent::rewind();
 
         return $count;
     }
@@ -125,18 +132,23 @@ class DirectoryIteratorPlus extends \DirectoryIterator
             throw new \InvalidArgumentException('DirectoryIteratorPlus::containsFile - Argument 1 expected to be string, '.gettype($file).' seen.');
 
         $found = false;
-        $this->rewind();
-        while ($this->valid())
+
+        parent::rewind();
+
+        while (parent::valid())
         {
-            $current = $this->current();
+            $current = parent::current();
             if ($current->isFile() && $current->getFilename() === $file)
             {
                 $found = true;
                 break;
             }
-            $this->next();
+
+            parent::next();
         }
-        $this->rewind();
+
+        parent::rewind();
+
         return $found;
     }
 
@@ -155,35 +167,38 @@ class DirectoryIteratorPlus extends \DirectoryIterator
             throw new \InvalidArgumentException('DirectoryIteratorPlus::containsFileLike - Argument 2 expected to be bool, '.gettype($caseInsensitive).' seen.');
 
         $found = false;
-        $this->rewind();
+
+        parent::rewind();
+
         if ($caseInsensitive)
         {
-            while ($this->valid())
+            while (parent::valid())
             {
-                $current = $this->current();
+                $current = parent::current();
                 if ($current->isFile() && stripos($current->getFilename(), $string) !== false)
                 {
                     $found = true;
                     break;
                 }
-                $this->next();
+                parent::next();
             }
         }
         else
         {
-            while ($this->valid())
+            while (parent::valid())
             {
-                $current = $this->current();
+                $current = parent::current();
                 if ($current->isFile() && strpos($current->getFilename(), $string) !== false)
                 {
                     $found = true;
                     break;
                 }
-                $this->next();
+                parent::next();
             }
         }
 
-        $this->rewind();
+        parent::rewind();
+        
         return $found;
     }
 
@@ -198,18 +213,18 @@ class DirectoryIteratorPlus extends \DirectoryIterator
             throw new \InvalidArgumentException('DirectoryIteratorPlus::containsDirectory - Argument 1 expected to be string, '.gettype($directory).' seen.');
 
         $found = false;
-        $this->rewind();
-        while ($this->valid())
+        parent::rewind();
+        while (parent::valid())
         {
-            $current = $this->current();
+            $current = parent::current();
             if ($current->isDir() && $current->getFilename() === $directory)
             {
                 $found = true;
                 break;
             }
-            $this->next();
+            parent::next();
         }
-        $this->rewind();
+        parent::rewind();
         return $found;
     }
 
@@ -228,35 +243,35 @@ class DirectoryIteratorPlus extends \DirectoryIterator
             throw new \InvalidArgumentException('DirectoryIteratorPlus::containsDirectoryLike - Argument 2 expected to be bool, '.gettype($caseInsensitive).' seen.');
 
         $found = false;
-        $this->rewind();
+        parent::rewind();
         if ($caseInsensitive)
         {
-            while ($this->valid())
+            while (parent::valid())
             {
-                $current = $this->current();
+                $current = parent::current();
                 if ($current->isDir() && stripos($current->getFilename(), $string) !== false)
                 {
                     $found = true;
                     break;
                 }
-                $this->next();
+                parent::next();
             }
         }
         else
         {
-            while ($this->valid())
+            while (parent::valid())
             {
-                $current = $this->current();
+                $current = parent::current();
                 if ($current->isDir() && strpos($current->getFilename(), $string) !== false)
                 {
                     $found = true;
                     break;
                 }
-                $this->next();
+                parent::next();
             }
         }
 
-        $this->rewind();
+        parent::rewind();
         return $found;
     }
 
@@ -270,17 +285,17 @@ class DirectoryIteratorPlus extends \DirectoryIterator
     public function paginateFileNames($offset = 0, $limit = 25, $search = null)
     {
         if (!is_int($offset))
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::paginateFileNames - Argument 1 expected to be integer, '.gettype($offset).' seen.');
+            throw new \InvalidArgumentException('Argument 1 expected to be integer, '.gettype($offset).' seen.');
         if ($offset < 0)
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::paginateFileNames - Argument 1 expected to be >= 0, "'.$offset.'" seen.');
+            throw new \InvalidArgumentException('Argument 1 expected to be >= 0, "'.$offset.'" seen.');
 
         if (!is_int($limit))
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::paginateFileNames - Argument 2 expected to be integer, '.gettype($limit).' seen.');
+            throw new \InvalidArgumentException('Argument 2 expected to be integer, '.gettype($limit).' seen.');
         if ($limit < -1)
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::paginateFileNames - Argument 2 must be >= -1, "'.$limit.'" seen.');
+            throw new \InvalidArgumentException('Argument 2 must be >= -1, "'.$limit.'" seen.');
 
         if ($search !== null && !is_scalar($search))
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::paginateFileNames - Argument 3 expected to be scalar value or null, '.gettype($search).' seen.');
+            throw new \InvalidArgumentException('Argument 3 expected to be scalar value or null, '.gettype($search).' seen.');
 
         $filei = 0;
 
@@ -290,17 +305,15 @@ class DirectoryIteratorPlus extends \DirectoryIterator
         if ($limit === -1)
             $limit = $this->fileCount;
 
+        parent::rewind();
+
         $listTotal = 0;
         $list = array();
-        if ($search === null)
+        if (null === $search)
         {
-            $this->rewind();
-            while($this->valid())
+            while(parent::valid() && $listTotal < $limit)
             {
-                if ($listTotal === $limit)
-                    break;
-
-                $current = $this->current();
+                $current = parent::current();
                 if ($current->isFile())
                 {
                     if ($filei++ >= $offset)
@@ -309,20 +322,16 @@ class DirectoryIteratorPlus extends \DirectoryIterator
                         $listTotal++;
                     }
                 }
-                $this->next();
+                parent::next();
             }
         }
         else
         {
             $search = (string)$search;
 
-            $this->rewind();
-            while($this->valid())
+            while(parent::valid() && $listTotal < $limit)
             {
-                if ($listTotal === $limit)
-                    break;
-
-                $current = $this->current();
+                $current = parent::current();
                 if ($current->isFile() && stripos($current->getFilename(), $search) !== false)
                 {
                     if ($filei++ >= $offset)
@@ -331,11 +340,11 @@ class DirectoryIteratorPlus extends \DirectoryIterator
                         $listTotal++;
                     }
                 }
-                $this->next();
+                parent::next();
             }
         }
 
-        $this->rewind();
+        parent::rewind();
 
         return $list;
     }
@@ -350,72 +359,94 @@ class DirectoryIteratorPlus extends \DirectoryIterator
     public function paginateFiles($offset = 0, $limit = 25, $search = null)
     {
         if (!is_int($offset))
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::paginateFiles - Argument 1 expected to be integer, '.gettype($offset).' seen.');
+            throw new \InvalidArgumentException('Argument 1 expected to be integer, '.gettype($offset).' seen.');
         if ($offset < 0)
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::paginateFiles - Argument 1 expected to be >= 0, "'.$offset.'" seen.');
+            throw new \InvalidArgumentException('Argument 1 expected to be >= 0, "'.$offset.'" seen.');
 
         if (!is_int($limit))
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::paginateFiles - Argument 2 expected to be integer, '.gettype($limit).' seen.');
+            throw new \InvalidArgumentException('Argument 2 expected to be integer, '.gettype($limit).' seen.');
         if ($limit < -1)
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::paginateFiles - Argument 2 must be >= -1, "'.$limit.'" seen.');
+            throw new \InvalidArgumentException('Argument 2 must be >= -1, "'.$limit.'" seen.');
 
         if ($search !== null && !is_scalar($search))
-            throw new \InvalidArgumentException('DirectoryIteratorPlus::paginateFiles - Argument 3 expected to be scalar value or null, '.gettype($search).' seen.');
-
-        $filei = 0;
+            throw new \InvalidArgumentException('Argument 3 expected to be scalar value or null, '.gettype($search).' seen.');
 
         if ($limit === -1)
             $limit = $this->fileCount;
 
-        if ($offset === 0)
-            $offset = -1;
+        if (null === $search)
+            return $this->paginateFilesNoSearch($offset, $limit);
 
+        return $this->paginateFilesSearch($offset, $limit, $search);
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @return array
+     */
+    protected function paginateFilesNoSearch($offset, $limit)
+    {
+        $filei = 0;
         $listTotal = 0;
         $list = array();
-        if ($search === null)
-        {
-            $this->rewind();
-            while($this->valid())
-            {
-                if ($listTotal === $limit)
-                    break;
 
-                $current = $this->current();
-                if ($current->isFile())
-                {
-                    if ($filei++ >= $offset)
-                    {
-                        $list[] = clone $current;
-                        $listTotal++;
-                    }
-                }
-                $this->next();
-            }
-        }
+        parent::rewind();
+
+        if ($offset === 0)
+            $offset = -1;
         else
+            $filei = 1;
+
+        while(parent::valid() && $listTotal < $limit)
         {
-            $search = (string)$search;
-
-            $this->rewind();
-            while($this->valid())
+            $current = parent::current();
+            if ($current->isFile() && $filei++ > $offset)
             {
-                if ($listTotal === $limit)
-                    break;
-
-                $current = $this->current();
-                if ($current->isFile() && stripos($current->getFilename(), $search) !== false)
-                {
-                    if ($filei++ >= $offset)
-                    {
-                        $list[] = clone $current;
-                        $listTotal++;
-                    }
-                }
-                $this->next();
+                $list[] = clone $current;
+                $listTotal++;
             }
+
+            parent::next();
         }
 
-        $this->rewind();
+        parent::rewind();
+
+        return $list;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @param int|string|float $search
+     * @return array
+     */
+    protected function paginateFilesSearch($offset, $limit, $search)
+    {
+        $filei = 0;
+        $listTotal = 0;
+        $list = array();
+
+        if ($offset === 0)
+            $offset = -1;
+        else
+            $filei = 1;
+
+        $search = (string)$search;
+
+        while(parent::valid() && $listTotal < $limit)
+        {
+            $current = parent::current();
+            if ($current->isFile() && stripos($current->getFilename(), $search) !== false && $filei++ > $offset)
+            {
+                $list[] = clone $current;
+                $listTotal++;
+            }
+
+            parent::next();
+        }
+
+        parent::rewind();
 
         return $list;
     }
