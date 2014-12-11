@@ -34,10 +34,14 @@ class DirectoryIteratorPlus extends \DirectoryIterator
 
         parent::__construct($realpath);
 
+        $data = array();
         if (DIRECTORY_SEPARATOR === '/')
-            $this->fileCount = (int)trim(shell_exec('find "'.$realpath.'" -maxdepth 1 -type f | wc -l'));
+            exec('(find "'.$realpath.'" -maxdepth 1 -type f | wc -l) 2>&1', $data);
         else
-            $this->fileCount = (int)trim(shell_exec('DIR /A-D /B "'.$realpath.'" | FIND /C /V ""'));
+            exec('(DIR /A-D /B "'.$realpath.'" | FIND /C /V "") 2>&1', $data);
+
+        if (count($data) === 1 && ctype_digit($data[0]))
+            $this->fileCount = (int)reset($data);
 
         $this->directoryCount = count(glob($realpath.DIRECTORY_SEPARATOR.'*', GLOB_ONLYDIR));
     }

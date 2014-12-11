@@ -757,6 +757,60 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
 
 
 
+    /*
+     *
+     *
+     *
+     *
+     * Empty Directory Tests
+     *
+     *
+     *
+     *
+     */
+
+    /**
+     * @covers \DCarbone\DirectoryIteratorPlus::__construct
+     * @uses \DCarbone\DirectoryIteratorPlus
+     * @returns \DCarbone\DirectoryIteratorPlus
+     */
+    public function testCanConstructObjectWithEmptyDirectory()
+    {
+        $dirIterator = new \DCarbone\DirectoryIteratorPlus(__DIR__.'/../misc/empty-directory');
+
+        $this->assertInstanceOf('\\DCarbone\\DirectoryIteratorPlus', $dirIterator);
+
+        return $dirIterator;
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryIteratorPlus::getFileCount
+     * @uses \DCarbone\DirectoryIteratorPlus
+     * @depends testCanConstructObjectWithEmptyDirectory
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
+     */
+    public function testFileCountOfEmptyDirectory(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    {
+        $count = $dirIterator->getFileCount();
+
+        $this->assertEquals(0, $count);
+    }
+
+    /**
+     * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCount
+     * @uses \DCarbone\DirectoryIteratorPlus
+     * @depends testCanConstructObjectWithEmptyDirectory
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
+     */
+    public function testSubDirectoryCountOfEmptyDirectory(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    {
+        $count = $dirIterator->getDirectoryCount();
+
+        $this->assertEquals(0, $count);
+    }
+
+
+
 
     /*
      *

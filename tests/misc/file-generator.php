@@ -35,3 +35,6 @@ if (is_dir(__DIR__.'/couple-of-files') && count(glob(__DIR__.'/couple-of-files/*
 
     symlink(__DIR__.'/couple-of-files', __DIR__.'/couple-of-files-link');
 }
+
+if (!is_dir(__DIR__.'/empty-directory'))
+    mkdir(__DIR__.'/empty-directory');
