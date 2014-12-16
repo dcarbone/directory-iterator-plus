@@ -4,13 +4,15 @@
  * Class DirectoryIteratorPlus
  * @package DCarbone
  */
-class DirectoryIteratorPlus extends \DirectoryIterator
+class DirectoryIteratorPlus extends \DirectoryIterator implements \Countable
 {
     /** @var int */
     protected $fileCount = 0;
 
     /** @var int */
     protected $directoryCount = 0;
+
+    private $_os;
 
     /**
      * Constructor
@@ -32,18 +34,25 @@ class DirectoryIteratorPlus extends \DirectoryIterator
         if (!is_dir($realpath))
             throw new \RuntimeException('DirectoryIterator::__construct - The directory name is invalid.');
 
+        switch(php_uname('s'))
+        {
+            case 'Windows NT':
+                $this->_os = 'windows';
+                break;
+
+            default:
+                $this->_os = 'linux';
+        }
+
         parent::__construct($realpath);
+    }
 
-        $data = array();
-        if (DIRECTORY_SEPARATOR === '/')
-            exec('(find "'.$realpath.'" -maxdepth 1 -type f | wc -l) 2>&1', $data);
-        else
-            exec('(DIR /A-D /B "'.$realpath.'" | FIND /C /V "") 2>&1', $data);
-
-        if (count($data) === 1 && ctype_digit($data[0]))
-            $this->fileCount = (int)reset($data);
-
-        $this->directoryCount = count(glob($realpath.DIRECTORY_SEPARATOR.'*', GLOB_ONLYDIR));
+    /**
+     * @return int
+     */
+    public function getItemCount()
+    {
+        return $this->getFileCount() + $this->getDirectoryCount();
     }
 
     /**
@@ -51,7 +60,29 @@ class DirectoryIteratorPlus extends \DirectoryIterator
      */
     public function getFileCount()
     {
-        return $this->fileCount;
+        switch($this->_os)
+        {
+            case 'windows':
+                return (int)trim(`(dir "{$this->getRealPath()}" /b/a-d | find /v /c "::") 2>&1`);
+
+            default:
+                return (int)trim(`(find "{$this->getRealPath()}" -maxdepth 1 -type f | wc -l) 2>&1`);
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getDirectoryCount()
+    {
+        switch($this->_os)
+        {
+            case 'windows':
+                return (int)trim(`(dir "{$this->getRealPath()}" /b/ad | find /v /c "::") 2>&1`);
+
+            default:
+                return (int)trim(`(find "{$this->getRealPath()}" -maxdepth 1 -type d | wc -l) 2>&1`);
+        }
     }
 
     /**
@@ -84,14 +115,6 @@ class DirectoryIteratorPlus extends \DirectoryIterator
         parent::rewind();
 
         return $count;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDirectoryCount()
-    {
-        return $this->directoryCount;
     }
 
     /**
@@ -453,5 +476,17 @@ class DirectoryIteratorPlus extends \DirectoryIterator
         parent::rewind();
 
         return $list;
+    }
+
+    /**
+     * (PHP 5 >= 5.1.0)
+     * Count elements of an object
+     * @link http://php.net/manual/en/countable.count.php
+     *
+     * @return int The custom count as an integer.
+     */
+    public function count()
+    {
+        return $this->getItemCount();
     }
 }
