@@ -16,6 +16,11 @@ if (!function_exists('generateRandomString'))
     }
 }
 
+if (!is_dir(__DIR__.'/couple-of-files'))
+    mkdir(__DIR__.'/couple-of-files');
+if (!is_dir(__DIR__.'/empty-directory'))
+    mkdir(__DIR__.'/empty-directory');
+
 /*
  * The directory tests/misc/couple-of-files should have come with this package.
  * The below logic populates that directory with 10 files and 10 directories, giving a total of 11 files
@@ -35,6 +40,3 @@ if (is_dir(__DIR__.'/couple-of-files') && count(glob(__DIR__.'/couple-of-files/*
 
     symlink(__DIR__.'/couple-of-files', __DIR__.'/couple-of-files-link');
 }
-
-if (!is_dir(__DIR__.'/empty-directory'))
-    mkdir(__DIR__.'/empty-directory');
