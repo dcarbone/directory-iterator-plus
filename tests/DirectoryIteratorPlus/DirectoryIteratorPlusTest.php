@@ -24,6 +24,22 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \DCarbone\DirectoryIteratorPlus::count
+     * @covers \DCarbone\DirectoryIteratorPlus::getItemCount
+     * @covers \DCarbone\DirectoryIteratorPlus::getFileCount
+     * @covers \DCarbone\DirectoryIteratorPlus::getDirectoryCount
+     * @uses \DCarbone\DirectoryIteratorPlus
+     * @uses \Countable
+     * @depends testCanConstructDirectoryIteratorPlusWithValidDirectoryPath
+     * @param \DCarbone\DirectoryIteratorPlus $dirIterator
+     */
+    public function testCountableInterface(\DCarbone\DirectoryIteratorPlus $dirIterator)
+    {
+        $this->assertInstanceOf('\\Countable', $dirIterator);
+        $this->assertCount(21, $dirIterator);
+    }
+
+    /**
      * @covers \DCarbone\DirectoryIteratorPlus::__construct
      * @uses \DCarbone\DirectoryIteratorPlus
      * @expectedException \InvalidArgumentException
