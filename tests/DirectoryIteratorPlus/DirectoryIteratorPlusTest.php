@@ -16,6 +16,8 @@ if (!function_exists('generateRandomString'))
     }
 }
 
+if (!is_dir(__DIR__.'/../misc'))
+    mkdir(__DIR__.'/../misc');
 if (!is_dir(__DIR__.'/../misc/couple-of-files'))
     mkdir(__DIR__.'/../misc/couple-of-files');
 if (!is_dir(__DIR__.'/../misc/empty-directory'))
