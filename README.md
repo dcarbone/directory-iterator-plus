@@ -35,10 +35,12 @@ or determining the existence of a file within a directory
 In order to keep this class as lightweight as possible, I defer file counting to the OS using the following commands:
 
 Windows:
-`DIR /A-D /B "'.$realpath.'" | FIND /C /V ""`
+- File: `(dir "{$this->getPath()}" /b/a-d | find /v /c "::") 2>&1`
+- Directory: `(dir "{$this->getPath()}" /b/ad | find /v /c "::") 2>&1`
 
 Linux-based:
-`find "'.$realpath.'" -maxdepth 1 -type f | wc -l`
+- File: `(find "{$this->getPath()}" -maxdepth 1 -type f | wc -l) 2>&1`
+- Directory: `(find "{$this->getPath()}" -maxdepth 1 -type d | wc -l) 2>&1`
 
 Then convert the response to an integer.  If you have comments / suggestions on better ways or commands I can use
 to accomplish this, please let me know!  I chose them as it is what works on my current environment.
