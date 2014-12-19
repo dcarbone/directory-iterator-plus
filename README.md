@@ -39,8 +39,8 @@ Windows:
 - Directory: `(dir "{$this->getPath()}" /b/ad | find /v /c "::") 2>&1`
 
 Linux-based:
-- File: `(find "{$this->getPath()}" -maxdepth 1 -type f | wc -l) 2>&1`
-- Directory: `(find "{$this->getPath()}" -maxdepth 1 -type d | wc -l) 2>&1`
+- File: `(cd "{$this->getPath()}" && find . -maxdepth 1 -type f | wc -l) 2>&1`
+- Directory: `(cd "{$this->getPath()}" && find -maxdepth 1 -type d ! -path . | wc -l) 2>&1`
 
 Then convert the response to an integer.  If you have comments / suggestions on better ways or commands I can use
 to accomplish this, please let me know!  I chose them as it is what works on my current environment.
