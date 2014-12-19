@@ -81,7 +81,7 @@ class DirectoryIteratorPlus extends \DirectoryIterator implements \Countable
                 return (int)trim(`(dir "{$this->getPath()}" /b/ad | find /v /c "::") 2>&1`);
 
             default:
-                return (int)trim(`(find "{$this->getPath()}" -maxdepth 1 -type d | wc -l) 2>&1`);
+                return (int)trim(`(find "{$this->getPath()}" -maxdepth 1 -type d ! -path . | wc -l) 2>&1`);
         }
     }
 
