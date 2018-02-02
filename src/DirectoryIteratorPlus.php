@@ -12,8 +12,6 @@ class DirectoryIteratorPlus extends \DirectoryIterator implements \Countable
     /** @var int */
     protected $directoryCount = 0;
 
-    private $_os;
-
     /**
      * Constructor
      *
@@ -34,16 +32,6 @@ class DirectoryIteratorPlus extends \DirectoryIterator implements \Countable
         if (!is_dir($realpath))
             throw new \RuntimeException('DirectoryIterator::__construct - The directory name is invalid.');
 
-        switch(php_uname('s'))
-        {
-            case 'Windows NT':
-                $this->_os = 'windows';
-                break;
-
-            default:
-                $this->_os = 'linux';
-        }
-
         parent::__construct($realpath);
     }
 
@@ -52,7 +40,7 @@ class DirectoryIteratorPlus extends \DirectoryIterator implements \Countable
      */
     public function getItemCount()
     {
-        return $this->getFileCount() + $this->getDirectoryCount();
+        return count(glob($this->getPath().'/*', GLOB_NOSORT));
     }
 
     /**
@@ -60,14 +48,7 @@ class DirectoryIteratorPlus extends \DirectoryIterator implements \Countable
      */
     public function getFileCount()
     {
-        switch($this->_os)
-        {
-            case 'windows':
-                return (int)trim(`(dir "{$this->getPath()}" /b/a-d | find /v /c "::") 2>&1`);
-
-            default:
-                return (int)trim(`(cd "{$this->getPath()}" && find . -maxdepth 1 -type f | wc -l) 2>&1`);
-        }
+        return count(glob($this->getPath().'/*', GLOB_NOSORT)) - count(glob($this->getPath().'/*', GLOB_ONLYDIR | GLOB_NOSORT));
     }
 
     /**
@@ -75,14 +56,7 @@ class DirectoryIteratorPlus extends \DirectoryIterator implements \Countable
      */
     public function getDirectoryCount()
     {
-        switch($this->_os)
-        {
-            case 'windows':
-                return (int)trim(`(dir "{$this->getPath()}" /b/ad | find /v /c "::") 2>&1`);
-
-            default:
-                return (int)trim(`(cd "{$this->getPath()}" && find -maxdepth 1 -type d ! -path . | wc -l) 2>&1`);
-        }
+        return count(glob($this->getPath().'/*', GLOB_ONLYDIR));
     }
 
     /**

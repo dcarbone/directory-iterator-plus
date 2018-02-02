@@ -44,7 +44,7 @@ if (is_dir(__DIR__.'/../misc/couple-of-files') && count(glob(__DIR__.'/../misc/c
 /**
  * Class DirectoryIteratorPlus
  */
-class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
+class DirectoryIteratorPlusTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @covers \DCarbone\DirectoryIteratorPlus::__construct
@@ -85,7 +85,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownWhenNonStringValuePassedToConstructor()
     {
-        $dirIterator = new \DCarbone\DirectoryIteratorPlus(1000000);
+        new \DCarbone\DirectoryIteratorPlus(1000000);
     }
 
     /**
@@ -95,7 +95,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownWhenNonExistentPathValuePassedToConstructor()
     {
-        $dirIterator = new \DCarbone\DirectoryIteratorPlus('hello there.');
+        new \DCarbone\DirectoryIteratorPlus('hello there.');
     }
 
     /**
@@ -105,7 +105,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownWhenValidNonDirectoryPathPassedToConstructor()
     {
-        $dirIterator = new \DCarbone\DirectoryIteratorPlus(__FILE__);
+        new \DCarbone\DirectoryIteratorPlus(__FILE__);
     }
 
     /**
@@ -169,7 +169,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByContainsFileWhenNonStringParameterPassed(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirIterator->containsFile(array('nope'));
+        $dirIterator->containsFile(array('nope'));
     }
 
     /**
@@ -233,7 +233,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByContainsFileLikeWithNonStringFirstArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirIterator->containsFileLike(array('nope'));
+        $dirIterator->containsFileLike(array('nope'));
     }
 
     /**
@@ -245,7 +245,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByContainsFileLikeWithNonBoolSecondArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirIterator->containsFileLike('0.txt', 'super true');
+        $dirIterator->containsFileLike('0.txt', 'super true');
     }
 
     /**
@@ -283,7 +283,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByContainsDirectoryWithNonStringParameter(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirIterator->containsDirectory(array('haha'));
+        $dirIterator->containsDirectory(array('haha'));
     }
 
     /**
@@ -334,7 +334,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByContainsDirectoryLikeWithNonStringFirstArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirIterator->containsDirectoryLike(42);
+        $dirIterator->containsDirectoryLike(42);
     }
 
     /**
@@ -346,7 +346,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByContainsDirectoryLikeWithNonBoolSecondArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $contains = $dirIterator->containsDirectoryLike('ory-0', 'no way, bro');
+        $dirIterator->containsDirectoryLike('ory-0', 'no way, bro');
     }
 
     /**
@@ -463,7 +463,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByPaginateFilenamesWithInvalidIntegerFirstArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirIterator->paginateFilenames(-7);
+        $dirIterator->paginateFilenames(-7);
     }
 
     /**
@@ -475,7 +475,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByPaginateFilenamesWithNonIntegerFirstArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirIterator->paginateFilenames('forty seven');
+        $dirIterator->paginateFilenames('forty seven');
     }
 
     /**
@@ -487,7 +487,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByPaginateFilenamesWithNonIntegerSecondArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirIterator->paginateFilenames(0, 'seventy 2');
+        $dirIterator->paginateFilenames(0, 'seventy 2');
     }
 
     /**
@@ -499,7 +499,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByPaginateFilenamesWithInvalidIntegerSecondArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirIterator->paginateFilenames(0, -42);
+        $dirIterator->paginateFilenames(0, -42);
     }
 
     /**
@@ -665,7 +665,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByPaginateFilesWithInvalidIntegerFirstArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirIterator->paginateFiles(-7);
+        $dirIterator->paginateFiles(-7);
     }
 
     /**
@@ -677,7 +677,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByPaginateFilesWithNonIntegerFirstArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirIterator->paginateFiles('forty seven');
+        $dirIterator->paginateFiles('forty seven');
     }
 
     /**
@@ -689,7 +689,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByPaginateFilesWithNonIntegerSecondArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirIterator->paginateFiles(0, 'seventy 2');
+        $dirIterator->paginateFiles(0, 'seventy 2');
     }
 
     /**
@@ -701,7 +701,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByPaginateFilesWithInvalidIntegerSecondArgument(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $list = $dirIterator->paginateFiles(0, -42);
+        $dirIterator->paginateFiles(0, -42);
     }
 
     /**
@@ -754,7 +754,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByGetFileCountSearchWhenNonStringTermUsed(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $searchCount = $dirIterator->getFileCountLike(array('nope'));
+        $dirIterator->getFileCountLike(array('nope'));
     }
 
     /**
@@ -806,7 +806,7 @@ class DirectoryIteratorPlusTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownByDirCountSearchIfNonStringValuePassed(\DCarbone\DirectoryIteratorPlus $dirIterator)
     {
-        $searchCount = $dirIterator->getDirectoryCountLike(array('hi'));
+        $dirIterator->getDirectoryCountLike(array('hi'));
     }
 
 
