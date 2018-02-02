@@ -35,20 +35,9 @@ or determining the existence of a file within a directory
 
 #### File and Directory Counting
 
-In order to keep this class as lightweight as possible, I defer file counting to the OS using the following commands:
-
-Windows:
-- File: `(dir "{$this->getPath()}" /b/a-d | find /v /c "::") 2>&1`
-- Directory: `(dir "{$this->getPath()}" /b/ad | find /v /c "::") 2>&1`
-
-Linux-based:
-- File: `(cd "{$this->getPath()}" && find . -maxdepth 1 -type f | wc -l) 2>&1`
-- Directory: `(cd "{$this->getPath()}" && find -maxdepth 1 -type d ! -path . | wc -l) 2>&1`
-
-Then convert the response to an integer.  If you have comments / suggestions on better ways or commands I can use
-to accomplish this, please let me know!  I chose them as it is what works on my current environment.
-
 You may retrieve these values after instantiation by calling `getFileCount()` or `getDirectoryCount()` methods.
+
+I used to do some `exec` nonsense, but now I just be lazy and use `glob`.
 
 #### Searching
 
